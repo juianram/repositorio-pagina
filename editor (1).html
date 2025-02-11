@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Código</title>
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+            width: 100%;
+            text-align: center;
+        }
+
+        textarea {
+            width: 90%;
+            margin: 10px 0;
+            padding: 10px;
+            font-family: monospace;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button,
+        select {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        select {
+            background-color: #007bff;
+            color: white;
+        }
+
+        iframe {
+            width: 90%;
+            height: 400px;
+            margin: 20px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        /* Estilos para pantallas pequeñas (móviles) */
+        @media (max-width: 600px) {
+            textarea {
+                height: 100px;
+                font-size: 14px;
+            }
+
+            button,
+            select {
+                width: 90%;
+                font-size: 14px;
+            }
+
+            iframe {
+                height: 300px;
+            }
+        }
+
+        /* Estilos para pantallas medianas (tablets) */
+        @media (min-width: 601px) and (max-width: 1024px) {
+            textarea {
+                height: 120px;
+                font-size: 15px;
+            }
+
+            button,
+            select {
+                width: 45%;
+                font-size: 15px;
+            }
+
+            iframe {
+                height: 350px;
+            }
+        }
+
+        /* Estilos para pantallas grandes (PCs) */
+        @media (min-width: 1025px) {
+            textarea {
+                height: 150px;
+                font-size: 16px;
+            }
+
+            button,
+            select {
+                width: auto;
+                font-size: 16px;
+            }
+
+            iframe {
+                height: 400px;
+            }
+        }
+
+        .navbar {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            background-color: #333;
+            padding: 10px 0;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: white;
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            background-color: #28a745;
+        }
+
+        .navbar a:hover {
+            background-color: #218838;
+        }
+
+        /* Ocultar el botón que lleva a editor.html */
+        #hide-editor-btn {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Editor de Código</h1>
+    </header>
+
+    <!-- Barra de navegación -->
+    <div class="navbar">
+        <a href="index.html">Inicio</a>
+        <a href="https://ingalexvarela.github.io/github_page_test/semana.html">Ejercicio de la semana</a>
+        <!-- Este botón estará oculto -->
+        <a href="editor.html" id="hide-editor-btn">Editor</a>
+    </div>
+
+    <textarea id="python_code" placeholder="Escribe tu código Python aquí..."></textarea>
+    <textarea id="cpp_code" placeholder="Escribe tu código C++ aquí..."></textarea>
+    <button onclick="saveCode()">Guardar Código</button>
+    <select id="language">
+        <option value="python">Python</option>
+        <option value="cpp">C++</option>
+    </select>
+    <button onclick="executeCode()">Ejecutar Código</button>
+
+    <iframe id="code_output" width="100%" height="400px" style="border:1px solid #ccc;"></iframe>
+
+    <script>
+        // Cargar el código guardado al cargar la página
+        window.onload = function () {
+            let pythonCode = localStorage.getItem('python_code');
+            let cppCode = localStorage.getItem('cpp_code');
+
+            if (pythonCode) {
+                document.getElementById('python_code').value = pythonCode;
+            }
+            if (cppCode) {
+                document.getElementById('cpp_code').value = cppCode;
+            }
+        };
+
+        function saveCode() {
+            localStorage.setItem('python_code', document.getElementById('python_code').value);
+            localStorage.setItem('cpp_code', document.getElementById('cpp_code').value);
+            alert('Código guardado exitosamente');
+        }
+
+        function executeCode() {
+            let language = document.getElementById('language').value;
+            let code = language === 'python' ? document.getElementById('python_code').value : document.getElementById('cpp_code').value;
+            let encodedCode = encodeURIComponent(code);
+            let iframe = document.getElementById('code_output');
+
+            if (language === 'python') {
+                iframe.src = `https://onecompiler.com/embed/python?code=${encodedCode}`;
+                // Ejecutar el código en la consola (solo para Python)
+                try {
+                    eval(code);
+                } catch (e) {
+                    console.error("Error al ejecutar el código Python:", e);
+                }
+            } else {
+                iframe.src = `https://onecompiler.com/embed/cpp?code=${encodedCode}`;
+                // Mostrar el código C++ en la consola
+                console.log("Código C++:\n", code);
+            }
+        }
+    </script>
+</body>
+
+</html>
