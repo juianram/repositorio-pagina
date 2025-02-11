@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Contenedor de botones */
+        .button-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 15px;
+            background-color: #007bff;
+        }
+
+        .button-container a {
+            text-decoration: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #0056b3;
+            border-radius: 5px;
+            transition: background 0.3s ease-in-out;
+        }
+
+        .button-container a:hover {
+            background-color: #003d80;
+        }
+
+        /* Imágenes y texto */
+        .img-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .img-container img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        h2 {
+            font-size: 1.8em;
+            margin-top: 20px;
+        }
+
+        /* Comentarios de la práctica */
+        .comments {
+            text-align: justify;
+            white-space: pre-wrap;
+            font-family: monospace;
+            padding: 10px;
+            max-width: 90%;
+            margin: auto;
+        }
+
+        /* Estilo para el área de comentarios */
+        .comment-box {
+            width: 100%;
+            height: 150px;
+            padding: 10px;
+            margin-top: 10px;
+            font-family: monospace;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: none;
+        }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .button-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .button-container a {
+                width: 80%;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h2 {
+                font-size: 1.5em;
+            }
+
+            .comments {
+                font-size: 14px;
+            }
+
+            .button-container a {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="button-container">
+            <a href="https://github.com/ingalexvarela">Perfil de GitHub</a>
+            <a href="index.html" id="homeButton">Home</a> <!-- Este es el botón que se esconderá solo en index.html -->
+            <a href="editor.html">Editor de Código</a>
+        </div>
+    </header>
+
+    <div class="img-container">
+        <img src="https://readme-typing-svg.herokuapp.com?font=Architects+Daughter&color=%2338C2FF&size=50&center=true&vCenter=true&height=60&width=600&lines=Bienvenido+a+mi+perfil!"
+            alt="Title">
+        <img src="https://github.com/7oSkaaa/7oSkaaa/blob/main/Images/Right_Side.gif?raw=true" width="250px">
+        <img src="https://readme-typing-svg.herokuapp.com?color=%236FDA44&size=32&center=true&vCenter=true&width=600&height=50&lines=I'm+Alex+Varela+%F0%9F%91%8B;Electrical+Engineer;+Computer+Science+Engineer;+Back-End+Engineer;+Problem+Solver;+Freelancer;+Open-Source+Enthusiast"
+            alt="Headline">
+    </div>
+
+    <div class="container" style="border: 2px solid #ccc; padding: 20px; border-radius: 10px;">
+        <h2>
+            <picture>
+                <img src="https://github.com/7oSkaaa/7oSkaaa/blob/main/Images/about_me.gif?raw=true" width="50px">
+            </picture>
+            Comentarios sobre la práctica o clase
+        </h2>
+        <hr>
+
+        <!-- Cuadro para escribir los comentarios -->
+        <textarea class="comment-box" id="commentBox" placeholder="Escribe tus comentarios aquí..."></textarea>
+
+        <hr>
+
+        <!-- Botón de actualizar -->
+        <button
+            style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;"
+            onclick="saveAndReload();">
+            Actualizar
+        </button>
+    </div>
+
+    <script>
+        // Cargar los comentarios guardados al cargar la página
+        window.onload = function () {
+            const savedComments = localStorage.getItem("comments");
+            if (savedComments) {
+                document.getElementById("commentBox").value = savedComments;
+            } else {
+                // Texto predeterminado si no hay comentarios guardados
+                document.getElementById("commentBox").value = `💻 ...............
+📚 ......................
+📝 ...................................
+🔭 ........................................
+🌱 ...............................................  
+🌟 .....................................................
+🚩 ................................................
+🎓 ......................................
+⚡ ....................................
+🤔 ......................`;
+            }
+
+            // Ocultar el botón de Home si estamos en la página index.html
+            if (window.location.pathname === "/index.html" || window.location.pathname === "/") {
+                document.getElementById("homeButton").style.display = "none";
+            }
+        };
+
+        // Función para guardar los comentarios en localStorage y recargar la página
+        function saveAndReload() {
+            const comments = document.getElementById("commentBox").value;
+            localStorage.setItem("comments", comments); // Guardar los comentarios
+            window.location.reload(); // Recargar la página
+        }
+    </script>
+
+</body>
+
+</html>
